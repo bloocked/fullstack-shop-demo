@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamSoft_backend", "YamSoft_backend\YamSoft_backend.csproj", "{3788E706-CC47-4A27-8253-534099C57952}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend", "YamSoft_backend\backend.csproj", "{3788E706-CC47-4A27-8253-534099C57952}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

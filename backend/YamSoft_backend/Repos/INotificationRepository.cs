@@ -8,6 +8,7 @@ namespace YamSoft_backend.Repos
     public interface INotificationRepository
     {
         Notification? GetById(int id);
+        Notification? GetLatestForUser(int userId);
         void Add(Notification notification);
         void Delete(Notification notification);
     }

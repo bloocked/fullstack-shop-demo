@@ -9,6 +9,8 @@ namespace YamSoft_backend.Repos
     {
         Product? GetById(int id);
         Product? GetByName(string name);
+
+        IEnumerable<Product> GetPaged(int page, int pageSize);
         void Add(Product product);
         void Delete(Product product);
     }

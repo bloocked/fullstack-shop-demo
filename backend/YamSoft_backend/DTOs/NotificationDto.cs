@@ -3,10 +3,9 @@
     /// <summary>
     /// Class for transfering notification data to frontend
     /// </summary>
-    public class NotificationsDto
+    public class NotificationDto
     {
-        public int Id { get; set; }
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }
 }

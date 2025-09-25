@@ -35,6 +35,21 @@ namespace YamSoft_backend.Repos
         }
 
         /// <summary>
+        /// Gets a paged list of products
+        /// </summary>
+        /// <param name="page">Page number (1-based).</param>
+        /// <param name="pageSize">How many products per page.</param>
+        /// <returns>Paged list of products.</returns>
+        public IEnumerable<Product> GetPaged(int page, int pageSize)
+        {
+            return _context.Products
+                .OrderBy(p => p.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
+        /// <summary>
         /// Adds a new product to the database
         /// </summary>
         /// <param name="product">The product to add</param>

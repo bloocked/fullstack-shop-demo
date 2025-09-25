@@ -1,11 +1,11 @@
 ﻿namespace YamSoft_backend.DTOs
 {
     /// <summary>
-    /// Class for transferring user data to frontend
+    /// DTO for creating a new user
     /// </summary>
-    public class UserDto
+    public class CreateUserDto
     {
-        public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }
