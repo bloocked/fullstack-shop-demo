@@ -20,8 +20,7 @@ namespace backend.Services
            var user = _repo.GetByUsername(username);
             if(user == null) return null;
 
-            var mockHashedPassword = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
-            if(user.PasswordHash != mockHashedPassword) return null;
+            if(user.Password != password) return null;
 
             return new UserDto
             {
