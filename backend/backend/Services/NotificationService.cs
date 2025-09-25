@@ -1,8 +1,9 @@
-﻿using YamSoft_backend.DTOs;
-using YamSoft_backend.Models;
-using YamSoft_backend.Repos;
+﻿using backend.DTOs;
+using backend.Models;
+using backend.Repos.Interfaces;
+using backend.Services.Interfaces;
 
-namespace YamSoft_backend.Services
+namespace backend.Services
 {
     public class NotificationService : INotificationService
     {

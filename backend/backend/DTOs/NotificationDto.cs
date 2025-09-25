@@ -1,4 +1,4 @@
-﻿namespace YamSoft_backend.DTOs
+﻿namespace backend.DTOs
 {
     /// <summary>
     /// Class for transfering notification data to frontend

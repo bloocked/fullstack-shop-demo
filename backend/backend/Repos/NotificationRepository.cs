@@ -1,7 +1,8 @@
-﻿using YamSoft_backend.Data;
-using YamSoft_backend.Models;
+﻿using backend.Data;
+using backend.Models;
+using backend.Repos.Interfaces;
 
-namespace YamSoft_backend.Repos
+namespace backend.Repos
 {
     /// <summary>
     /// Implements the notification repository for data operations

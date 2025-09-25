@@ -1,4 +1,4 @@
-namespace YamSoft_backend
+namespace backend
 {
     public class WeatherForecast
     {

@@ -1,6 +1,6 @@
-﻿using YamSoft_backend.DTOs;
+﻿using backend.DTOs;
 
-namespace YamSoft_backend.Services
+namespace backend.Services.Interfaces
 {
     /// <summary>
     /// Defines a contract related to notification operations

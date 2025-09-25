@@ -1,11 +1,11 @@
 ﻿namespace backend.DTOs
 {
     /// <summary>
-    /// Class for transferring user data to frontend
+    /// DTO for user login requests
     /// </summary>
-    public class UserDto
+    public class LoginDto
     {
-        public int Id { get; set; }
         public string Username { get; set; } = string.Empty;
+        public string Password { get; set; } = string.Empty;
     }
 }

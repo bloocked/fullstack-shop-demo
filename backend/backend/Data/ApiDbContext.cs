@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using YamSoft_backend.Models;
+using backend.Models;
 
-namespace YamSoft_backend.Data
+namespace backend.Data
 {
     public class ApiDbContext : DbContext
     {

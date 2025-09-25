@@ -1,6 +1,7 @@
-﻿using YamSoft_backend.Models;
+﻿using backend.Models;
+using backend.Repos.Interfaces;
 
-namespace YamSoft_backend.Repos
+namespace backend.Repos
 {
     /// <summary>
     /// Implements the product repository for data operations

@@ -1,4 +1,4 @@
-﻿namespace YamSoft_backend.DTOs
+﻿namespace backend.DTOs.Create
 {
     /// <summary>
     /// DTO for creating a new user

@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using YamSoft_backend.Data;
+using backend.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +9,17 @@ builder.Services.AddDbContext<ApiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
+
+// Register repositories
+builder.Services.AddScoped<backend.Repos.Interfaces.IUserRepository, backend.Repos.UserRepository>();
+builder.Services.AddScoped<backend.Repos.Interfaces.IProductRepository, backend.Repos.ProductRepository>();
+builder.Services.AddScoped<backend.Repos.Interfaces.INotificationRepository, backend.Repos.NotificationRepository>();
+
+// Register application services
+builder.Services.AddScoped<backend.Services.Interfaces.IUserService, backend.Services.UserService>();
+builder.Services.AddScoped<backend.Services.Interfaces.IProductService, backend.Services.ProductService>();
+builder.Services.AddScoped<backend.Services.Interfaces.INotificationService, backend.Services.NotificationService>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

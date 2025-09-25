@@ -1,16 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using backend.DTOs;
+using backend.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace YamSoft_backend.Controllers
+namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
-        public readonly IConfiguration configuration;
-        public UsersController(IConfiguration configuration)
+        public readonly IUserService _userService;
+        public UsersController(IUserService userService)
         {
-            this.configuration = configuration;
+            _userService = userService;
+        }
+
+        // POST: api/users/login
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] LoginDto dto)
+        {
+            var user = _userService.Authenticate(dto.Username, dto.Password);
+            if (user == null)
+            {
+                return Unauthorized(new { error = "Invalid username or password." });
+            }
+            return Ok(user);
         }
 
     }

@@ -1,4 +1,4 @@
-﻿namespace YamSoft_backend.DTOs
+﻿namespace backend.DTOs.Create
 {
     public class CreateNotificationDto
     {

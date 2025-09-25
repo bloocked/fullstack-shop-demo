@@ -1,4 +1,4 @@
-﻿namespace YamSoft_backend.Models
+﻿namespace backend.Models
 {
     /// <summary>
     /// Class for notification entity

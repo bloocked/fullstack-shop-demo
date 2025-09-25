@@ -1,6 +1,6 @@
-﻿using YamSoft_backend.Models;
+﻿using backend.Models;
 
-namespace YamSoft_backend.Repos
+namespace backend.Repos.Interfaces
 {
     /// <summary>
     /// Defines the contract for product data operations
