@@ -1,5 +1,8 @@
 ﻿namespace YamSoft_backend.DTOs
 {
+    /// <summary>
+    /// Class for transfering product data to frontend
+    /// </summary>
     public class ProductsDto
     {
         public int Id { get; set; }
