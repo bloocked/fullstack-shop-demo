@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace backend.Migrations
 {
     /// <inheritdoc />
@@ -49,11 +51,38 @@ namespace backend.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Password", "Username" },
+                values: new object[,]
+                {
+                    { 1, "pass1", "user1" },
+                    { 2, "pass2", "user2" },
+                    { 3, "pass3", "user3" },
+                    { 4, "pass4", "user4" },
+                    { 5, "pass5", "user5" },
+                    { 6, "pass6", "user6" },
+                    { 7, "pass7", "user7" },
+                    { 8, "pass8", "user8" },
+                    { 9, "pass9", "user9" },
+                    { 10, "pass10", "user10" },
+                    { 11, "pass11", "user11" },
+                    { 12, "pass12", "user12" },
+                    { 13, "pass13", "user13" },
+                    { 14, "pass14", "user14" },
+                    { 15, "pass15", "user15" },
+                    { 16, "pass16", "user16" },
+                    { 17, "pass17", "user17" },
+                    { 18, "pass18", "user18" },
+                    { 19, "pass19", "user19" },
+                    { 20, "pass20", "user20" }
                 });
         }
 

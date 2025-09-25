@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using backend.Models;
 
 namespace backend.Data
@@ -45,6 +44,7 @@ namespace backend.Data
                     Stock = new Random().Next(1, 100)
                 });
             }
+            modelBuilder.Entity<Product>().HasData(products);
         }
     }
 }

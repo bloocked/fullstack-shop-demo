@@ -12,8 +12,8 @@ using backend.Data;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApiDbContext))]
-    [Migration("20250925205022_SeedSampleData")]
-    partial class SeedSampleData
+    [Migration("20250925212410_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -84,7 +84,7 @@ namespace backend.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,121 +100,121 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
-                            PasswordHash = "cGFzczE=",
+                            Password = "pass1",
                             Username = "user1"
                         },
                         new
                         {
                             Id = 2,
-                            PasswordHash = "cGFzczI=",
+                            Password = "pass2",
                             Username = "user2"
                         },
                         new
                         {
                             Id = 3,
-                            PasswordHash = "cGFzczM=",
+                            Password = "pass3",
                             Username = "user3"
                         },
                         new
                         {
                             Id = 4,
-                            PasswordHash = "cGFzczQ=",
+                            Password = "pass4",
                             Username = "user4"
                         },
                         new
                         {
                             Id = 5,
-                            PasswordHash = "cGFzczU=",
+                            Password = "pass5",
                             Username = "user5"
                         },
                         new
                         {
                             Id = 6,
-                            PasswordHash = "cGFzczY=",
+                            Password = "pass6",
                             Username = "user6"
                         },
                         new
                         {
                             Id = 7,
-                            PasswordHash = "cGFzczc=",
+                            Password = "pass7",
                             Username = "user7"
                         },
                         new
                         {
                             Id = 8,
-                            PasswordHash = "cGFzczg=",
+                            Password = "pass8",
                             Username = "user8"
                         },
                         new
                         {
                             Id = 9,
-                            PasswordHash = "cGFzczk=",
+                            Password = "pass9",
                             Username = "user9"
                         },
                         new
                         {
                             Id = 10,
-                            PasswordHash = "cGFzczEw",
+                            Password = "pass10",
                             Username = "user10"
                         },
                         new
                         {
                             Id = 11,
-                            PasswordHash = "cGFzczEx",
+                            Password = "pass11",
                             Username = "user11"
                         },
                         new
                         {
                             Id = 12,
-                            PasswordHash = "cGFzczEy",
+                            Password = "pass12",
                             Username = "user12"
                         },
                         new
                         {
                             Id = 13,
-                            PasswordHash = "cGFzczEz",
+                            Password = "pass13",
                             Username = "user13"
                         },
                         new
                         {
                             Id = 14,
-                            PasswordHash = "cGFzczE0",
+                            Password = "pass14",
                             Username = "user14"
                         },
                         new
                         {
                             Id = 15,
-                            PasswordHash = "cGFzczE1",
+                            Password = "pass15",
                             Username = "user15"
                         },
                         new
                         {
                             Id = 16,
-                            PasswordHash = "cGFzczE2",
+                            Password = "pass16",
                             Username = "user16"
                         },
                         new
                         {
                             Id = 17,
-                            PasswordHash = "cGFzczE3",
+                            Password = "pass17",
                             Username = "user17"
                         },
                         new
                         {
                             Id = 18,
-                            PasswordHash = "cGFzczE4",
+                            Password = "pass18",
                             Username = "user18"
                         },
                         new
                         {
                             Id = 19,
-                            PasswordHash = "cGFzczE5",
+                            Password = "pass19",
                             Username = "user19"
                         },
                         new
                         {
                             Id = 20,
-                            PasswordHash = "cGFzczIw",
+                            Password = "pass20",
                             Username = "user20"
                         });
                 });
