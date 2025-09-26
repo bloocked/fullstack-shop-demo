@@ -24,7 +24,7 @@ namespace backend.Services
             };
 
             _repo.Add(notification);
-            Console.WriteLine("After save, notification.Id = " + notification.Id);
+            Console.WriteLine($"THE ID OF NOTI IS ====== {notification.Id}");
 
             // Map to DTO before returning
             var notificationDto = new NotificationDto
@@ -43,6 +43,7 @@ namespace backend.Services
             if (notif == null) return null;
             return new NotificationDto
             {
+                Id = notif.Id,
                 Message = notif.Message,
                 CreatedAt = notif.CreatedAt
             };

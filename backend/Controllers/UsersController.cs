@@ -26,7 +26,7 @@ namespace backend.Controllers
                 return Unauthorized(new { error = "Invalid username or password." });
             }
 
-            NotificationDto? notification = _notificationService.SendNotification(user.Id, "Login successful");
+            var notification = _notificationService.SendNotification(user.Id, "Login successful");
 
             return Ok(user);
         }
