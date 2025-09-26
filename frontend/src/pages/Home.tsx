@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Grid, Card, CardContent, Typography } from "@mui/material";
+import { Grid, Card, CardContent, Typography, Alert, Slide } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 type Product = {
@@ -12,10 +12,13 @@ type Product = {
 
 function Home() {
   const [username, setUsername] = useState("");
+  const [userId, setUserId] = useState<number|null>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const [notification, setNotification] = useState<string|null>(null);
+  const [showBanner, setShowBanner] = useState(false);
   const pageSize = 10;
   const loadingRef = useRef(false);
   const navigate = useNavigate();
@@ -25,8 +28,23 @@ function Home() {
     if (userStr) {
       const user = JSON.parse(userStr);
       setUsername(user.username);
+      setUserId(user.id);
     }
   }, []);
+
+  // Fetch latest notification for user and show banner
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`${import.meta.env.VITE_API_URL}/api/notifications/latest?userId=${userId}`)
+      .then(res => res.ok ? res.json() : null)
+      .then(data => {
+        if (data && data.message) {
+          setNotification(data.message);
+          setShowBanner(true);
+          setTimeout(() => setShowBanner(false), 4000);
+        }
+      });
+  }, [userId]);
 
   useEffect(() => {
     if (!hasMore || loadingRef.current) return;
@@ -70,14 +88,20 @@ function Home() {
 
   return (
     <div style={{ minHeight: '100vh', background: '#181818' }}>
+      {/* Notification banner */}
+      <Slide direction="down" in={showBanner} mountOnEnter unmountOnExit>
+        <Alert severity="success" sx={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 2000, borderRadius: 0, fontSize: 22, fontWeight: 600 }}>
+          {notification}
+        </Alert>
+      </Slide>
       {/* Username and Cart link top-left */}
-      <div style={{ position: 'fixed', top: 0, left: 0, padding: '32px 48px', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-        <Typography variant="h3" sx={{ fontWeight: 700, color: '#fff' }}>
+      <div style={{ position: 'fixed', top: 0, left: 0, padding: '85px 140px', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+        <Typography variant="h3" sx={{ fontWeight: 700, fontSize: 100, color: '#fff' }}>
           {username}
         </Typography>
         <Typography
           variant="h5"
-          sx={{ fontWeight: 700, color: '#fff', cursor: 'pointer', mt: 2, textDecoration: 'underline' }}
+          sx={{ fontWeight: 700, fontSize: 60, color: '#fff', cursor: 'pointer', mt: 2, textDecoration: 'underline' }}
           onClick={() => navigate('/cart')}
         >
           Cart
