@@ -1,7 +1,11 @@
+// Home.tsx: Product listing, infinite scroll, notification, and cart logic
+// Only essential comments for clarity and maintainability
+
 import { useState, useEffect, useRef } from "react";
 import { Grid, Card, CardContent, Typography, Alert, Slide, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 
+// Product type for type safety
 type Product = {
   id: number;
   name: string;
@@ -11,6 +15,7 @@ type Product = {
 };
 
 function Home() {
+  // State for user, products, pagination, notification, etc.
   const [username, setUsername] = useState("");
   const [userId, setUserId] = useState<number|null>(null);
   const [products, setProducts] = useState<Product[]>([]);
@@ -23,7 +28,13 @@ function Home() {
   const loadingRef = useRef(false);
   const navigate = useNavigate();
 
-    // Add product to cart in localStorage
+  // Auth guard: redirect to login if not authenticated
+  const user = localStorage.getItem('user');
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Add product to cart and persist in localStorage
   const handleAddToCart = (product: Product) => {
     const cartStr = localStorage.getItem('cart');
     let cart: { product: Product; quantity: number }[] = [];
@@ -41,6 +52,7 @@ function Home() {
     localStorage.setItem('cart', JSON.stringify(cart));
   };
 
+  // Load user info on mount
   useEffect(() => {
     const userStr = localStorage.getItem("user");
     if (userStr) {
@@ -50,7 +62,7 @@ function Home() {
     }
   }, []);
 
-  // Show notification banner only if showLoginNotification flag is set
+  // Show notification banner only after login
   useEffect(() => {
     if (!userId) return;
     const shouldShow = localStorage.getItem('showLoginNotification');
@@ -67,11 +79,11 @@ function Home() {
       });
   }, [userId]);
 
+  // Infinite scroll: load more products on scroll
   useEffect(() => {
     if (!hasMore || loadingRef.current) return;
     setLoading(true);
     loadingRef.current = true;
-
     fetch(`${import.meta.env.VITE_API_URL}/api/products?page=${page}&pageSize=${pageSize}`)
       .then(res => res.json())
       .then(data => {
@@ -89,27 +101,31 @@ function Home() {
       });
   }, [page]);
 
+  // Listen for scroll to trigger infinite scroll
   useEffect(() => {
     const handleScroll = () => {
       if (!hasMore || loadingRef.current) return;
-
       const scrollY = window.scrollY || window.pageYOffset;
       const windowHeight = window.innerHeight;
       const docHeight = document.documentElement.scrollHeight;
-
-      if (docHeight - (scrollY + windowHeight) < 5) { // intentionally small margin to showcase infinite scroll working
+      if (docHeight - (scrollY + windowHeight) < 5) {
         setPage(prev => prev + 1);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, [hasMore]);
 
+  // Logout and clear session
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('cart');
+    navigate('/login');
+  };
+
   return (
     <div style={{ minHeight: '100vh', background: '#181818' }}>
-      {/* Notification banner */}
+      {/* Notification banner after login */}
       <Slide direction="down" in={showBanner} mountOnEnter unmountOnExit>
         <Alert severity="success" sx={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 2000, borderRadius: 0, fontSize: 22, fontWeight: 600 }}>
           {notification}
@@ -128,9 +144,19 @@ function Home() {
           Cart
         </Typography>
       </div>
+      {/* Logout button top-right */}
+      <div style={{ position: 'fixed', top: 0, right: 0, padding: '85px 140px', zIndex: 10 }}>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: 700, fontSize: 60, color: '#fff', cursor: 'pointer', mt: 2, textDecoration: 'underline' }}
+          onClick={handleLogout}
+        >
+          Logout
+        </Typography>
+      </div>
       {/* Product grid with 4 per row */}
-  <div style={{ width: '100%', paddingTop: 80, boxSizing: 'border-box' }}>
-  <Grid container spacing={3} justifyContent="center">
+      <div style={{ width: '100%', paddingTop: 80, boxSizing: 'border-box' }}>
+        <Grid container spacing={3} justifyContent="center">
           {products.map(product => (
             // @ts-ignore
             <Grid item xs={3} key={product.id}>

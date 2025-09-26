@@ -1,3 +1,4 @@
+// Login page: handles user authentication and redirects on success
 import { useState } from "react"
 import { Box, TextField, Button, Typography, CssBaseline } from '@mui/material';
 import { useNavigate } from "react-router-dom";
@@ -5,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 function Login() {
+  // State for username, password, error
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+  // Handle login form submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
@@ -19,19 +22,15 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-
       if (!response.ok) {
         const data = await response.json();
         setError(data.error || 'Login failed');
         return;
       }
-
       const user = await response.json();
-
-  localStorage.setItem('user', JSON.stringify(user));
-  localStorage.setItem('showLoginNotification', '1');
-  navigate('/home');
-
+      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('showLoginNotification', '1');
+      navigate('/home');
     } catch (err) {
       setError('Network error');
     }
@@ -55,8 +54,7 @@ function Login() {
       <Typography variant="h4" mb={3} align="center" sx={{ color: '#fff' }}>
         Welcome!
       </Typography>
-      { /* Login form */}
-  <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: 520, margin: 0 }}>
+      <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: 520, margin: 0 }}>
         <TextField
           label="Username"
           variant="filled"
