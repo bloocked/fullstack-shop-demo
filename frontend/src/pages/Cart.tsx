@@ -9,11 +9,13 @@ type Product = {
   name: string;
   price: number;
   description: string;
+  imageUrl: string;
 };
 
 type CartItem = {
   product: Product;
   quantity: number;
+  imageUrl: string;
 };
 
 function Cart() {
@@ -128,6 +130,11 @@ function Cart() {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
               {cart.map(item => (
                 <Card key={item.product.id} sx={{ width: '100%', minHeight: 100, background: '#232323', color: '#fff', display: 'flex', alignItems: 'center', px: 4, py: 2, boxSizing: 'border-box' }}>
+                  <img
+                    src={item.product.imageUrl}
+                    alt={item.product.name}
+                    style={{ width: 64, height: 64, objectFit: 'cover', borderRadius: 8, marginRight: 24 }}
+                  />
                   <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                     <Typography variant="h6" sx={{ color: '#fff' }}>{item.product.name}</Typography>
                     <Typography variant="body2" sx={{ color: '#bbb' }}>{item.product.description}</Typography>

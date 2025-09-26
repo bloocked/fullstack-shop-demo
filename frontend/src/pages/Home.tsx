@@ -11,7 +11,7 @@ type Product = {
   name: string;
   price: number;
   description: string;
-  // Add image or other fields if your backend returns them
+  imageUrl: string;
 };
 
 function Home() {
@@ -161,6 +161,11 @@ function Home() {
             // @ts-ignore
             <Grid item xs={3} key={product.id}>
               <Card sx={{ width: 280, height: 320, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#232323', color: '#fff' }}>
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  style={{ width: '100%', height: 140, objectFit: 'cover', borderTopLeftRadius: 4, borderTopRightRadius: 4 }}
+                />
                 <CardContent sx={{ flexGrow: 1 }}>
                   <Typography variant="h6" sx={{ mb: 1, color: '#fff' }}>{product.name}</Typography>
                   <Typography sx={{ mb: 1, color: '#90caf9' }}>${product.price}</Typography>
