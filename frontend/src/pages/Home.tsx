@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Grid, Card, CardContent, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 type Product = {
   id: number;
@@ -12,6 +13,12 @@ type Product = {
 function Home() {
   const [username, setUsername] = useState("");
   const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const pageSize = 10;
+  const loadingRef = useRef(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -19,19 +26,61 @@ function Home() {
       const user = JSON.parse(userStr);
       setUsername(user.username);
     }
-    // Fetch products from backend with page and pageSize
-    fetch(`${import.meta.env.VITE_API_URL}/api/products?page=1&pageSize=20`)
-      .then(res => res.json())
-      .then(data => setProducts(data))
-      .catch(() => setProducts([]));
   }, []);
+
+  useEffect(() => {
+    if (!hasMore || loadingRef.current) return;
+    setLoading(true);
+    loadingRef.current = true;
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/products?page=${page}&pageSize=${pageSize}`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setProducts(prev => [...prev, ...data]);
+          if (data.length < pageSize) setHasMore(false);
+        } else {
+          setHasMore(false);
+        }
+      })
+      .catch(() => setHasMore(false))
+      .finally(() => {
+        setLoading(false);
+        loadingRef.current = false;
+      });
+  }, [page]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!hasMore || loadingRef.current) return;
+
+      const scrollY = window.scrollY || window.pageYOffset;
+      const windowHeight = window.innerHeight;
+      const docHeight = document.documentElement.scrollHeight;
+
+      if (docHeight - (scrollY + windowHeight) < 5) { // intentionally small margin to showcase infinite scroll working
+        setPage(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [hasMore]);
 
   return (
     <div style={{ minHeight: '100vh', background: '#181818' }}>
-      {/* Username top-left */}
-      <div style={{ position: 'fixed', top: 0, left: 0, padding: '32px 48px', zIndex: 10 }}>
+      {/* Username and Cart link top-left */}
+      <div style={{ position: 'fixed', top: 0, left: 0, padding: '32px 48px', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <Typography variant="h3" sx={{ fontWeight: 700, color: '#fff' }}>
           {username}
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: 700, color: '#fff', cursor: 'pointer', mt: 2, textDecoration: 'underline' }}
+          onClick={() => navigate('/cart')}
+        >
+          Cart
         </Typography>
       </div>
       {/* Product grid with 4 per row */}
@@ -60,6 +109,11 @@ function Home() {
             ));
           })()}
         </Grid>
+        {loading && (
+          <Typography align="center" sx={{ color: '#fff', mt: 2 }}>
+            Loading more products...
+          </Typography>
+        )}
       </div>
     </div>
   );
