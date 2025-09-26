@@ -15,16 +15,16 @@ namespace backend.Controllers
             _notificationService = notificationService;
         }
 
-        // POST: api/notifications/send
-        [HttpPost("send")]
-        public IActionResult SendNotification([FromQuery] string message, [FromQuery] int userId)
+        // GET: api/notifications/latest?userId=1
+        [HttpGet("latest")]
+        public IActionResult GetLatestNotification([FromQuery] int userId)
         {
-            NotificationDto? result = _notificationService.SendNotification(userId, message);
+            NotificationDto? result = _notificationService.GetLatestForUser(userId);
             if (result == null)
             {
-                return BadRequest(new { error = "Failed to send notification." });
+                return NotFound(new { error = "No notifications found for the user." });
             }
-            return Ok(new { success = "Notification sent successfully." });
+            return Ok(result);
         }
     }
 }

@@ -24,6 +24,7 @@ namespace backend.Services
             };
 
             _repo.Add(notification);
+            Console.WriteLine("After save, notification.Id = " + notification.Id);
 
             // Map to DTO before returning
             var notificationDto = new NotificationDto
