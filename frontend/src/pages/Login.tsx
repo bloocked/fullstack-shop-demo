@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Box, TextField, Button, Typography } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -7,6 +8,7 @@ function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,13 +19,18 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
+
       if (!response.ok) {
         const data = await response.json();
         setError(data.error || 'Login failed');
         return;
       }
+
       const user = await response.json();
-      // Save user info (e.g., localStorage) and redirect as needed
+      localStorage.setItem('user', JSON.stringify(user));
+
+      navigate('/home');
+
     } catch (err) {
       setError('Network error');
     }
