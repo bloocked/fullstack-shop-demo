@@ -16,6 +16,13 @@ namespace backend.Controllers
             _notificationService = notificationService;
         }
 
+        /// <summary>
+        /// Authenticates a user based on the provided credentials and returns the user details if successful.
+        /// </summary>
+        /// <remarks>This method sends a notification to the user upon successful login.</remarks>
+        /// <param name="dto">An object containing the username and password for authentication.</param>
+        /// <returns>An <see cref="IActionResult"/> containing the authenticated user details if the login is successful. Returns
+        /// <see cref="UnauthorizedObjectResult"/> with an error message if the credentials are invalid.</returns>
         // POST: api/users/login
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginDto dto)

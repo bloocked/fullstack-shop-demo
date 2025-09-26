@@ -3,6 +3,9 @@ using backend.Models;
 
 namespace backend.Data
 {
+    /// <summary>
+    /// EF Core <see cref="DbContext"/> for the API: exposes entity sets and configures model rules and seed data
+    /// </summary>
     public class ApiDbContext : DbContext
     {
         public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
@@ -11,14 +14,25 @@ namespace backend.Data
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Notification> Notifications { get; set; } = null!;
 
+        /// <summary>
+        /// Configures the model rules and seeds initial data
+        /// </summary>
+        /// <param name="modelBuilder">The model builder used to configure entities</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-                modelBuilder.Entity<User>()
+            modelBuilder.Entity<User>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
-                
+
+            modelBuilder.Entity<User>().Property(u => u.Username).IsRequired();
+            modelBuilder.Entity<User>().Property(u => u.Password).IsRequired();
+
+            modelBuilder.Entity<Product>().Property(p => p.Name).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.Description).IsRequired();
+            modelBuilder.Entity<Product>().Property(p => p.Price).IsRequired().HasPrecision(18, 2);
+            modelBuilder.Entity<Product>().Property(p => p.Stock).IsRequired();
 
             // Seed users
             var users = new List<User>();

@@ -16,11 +16,6 @@ namespace backend.Repos
             _context = context;
         }
 
-        /// <summary>
-        /// Gets the first user with given username
-        /// </summary>
-        /// <param name="username">the username to query for</param>
-        /// <returns>The user entity or null if not found</returns>
         public User? GetByUsername(string username)
         {
             return _context.Users.FirstOrDefault(u => u.Username == username);

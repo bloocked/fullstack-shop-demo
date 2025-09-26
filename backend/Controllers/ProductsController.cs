@@ -14,6 +14,12 @@ namespace backend.Controllers
             _productService = productService;
         }
 
+        /// <summary>
+        /// Gets a paginated list of products
+        /// </summary>
+        /// <param name="page">the page of products to fetch</param>
+        /// <param name="pageSize">the product amount to fetch per page</param>
+        /// <returns>An <see cref="IActionResult"/> containing the list of products, NotFound otherwise</returns>
         // GET: api/products
         [HttpGet]
         public IActionResult GetProducts([FromQuery] int page = 1, [FromQuery] int pageSize = 10)

@@ -15,12 +15,6 @@ namespace backend.Repos
             _context = context;
         }
 
-        /// <summary>
-        /// Gets a paged list of products
-        /// </summary>
-        /// <param name="page">Page number (1-based).</param>
-        /// <param name="pageSize">How many products per page.</param>
-        /// <returns>Paged list of products.</returns>
         public IEnumerable<Product> GetPaged(int page, int pageSize)
         {
             return _context.Products

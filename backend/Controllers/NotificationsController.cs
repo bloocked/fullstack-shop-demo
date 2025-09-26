@@ -15,6 +15,11 @@ namespace backend.Controllers
             _notificationService = notificationService;
         }
 
+        /// <summary>
+        /// Gets the latest notification for a user
+        /// </summary>
+        /// <param name="userId">the user to get notification for</param>
+        /// <returns>Ok if notification is found, NotFound otherwise</returns>
         // GET: api/notifications/latest?userId=1
         [HttpGet("latest")]
         public IActionResult GetLatestNotification([FromQuery] int userId)
