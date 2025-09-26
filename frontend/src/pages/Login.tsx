@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Box, TextField, Button, Typography } from '@mui/material';
+import { Box, TextField, Button, Typography, CssBaseline } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -37,20 +37,25 @@ function Login() {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      width="100vw"
-      height="100vh"
-      bgcolor="#1d1d1dff"
-    >
+    <>
+      <CssBaseline />
+      <style>{`
+        html, body { height: 100%; margin: 0; overflow: hidden; background: #1d1d1dff !important; }
+      `}</style>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+        height="100vh"
+        sx={{ overflowX: 'hidden', mb: 20 }}
+      >
       <Typography variant="h4" mb={3} align="center" sx={{ color: '#fff' }}>
         Welcome!
       </Typography>
       { /* Login form */}
-      <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: 400 }}>
+  <form onSubmit={handleSubmit} style={{ width: '100%', maxWidth: 520, margin: 0 }}>
         <TextField
           label="Username"
           variant="filled"
@@ -59,11 +64,12 @@ function Login() {
           value={username}
           onChange={e => setUsername(e.target.value)}
           required
-            sx={{
-              input: { color: '#ffffffff', backgroundColor: '#585858ff' },
-              label: { color: '#ffffffff' },
-              '.MuiFilledInput-root': { backgroundColor: '#585858ff' }
-            }}
+          sx={{
+            input: { color: '#ffffffff', backgroundColor: '#585858ff', fontSize: 24, height: 64 },
+            label: { color: '#ffffffff', fontSize: 22 },
+            '.MuiFilledInput-root': { backgroundColor: '#585858ff' },
+            mb: 3
+          }}
         />
         <TextField
           label="Password"
@@ -75,10 +81,11 @@ function Login() {
           onChange={e => setPassword(e.target.value)}
           required
           sx={{
-              input: { color: '#ffffffff', backgroundColor: '#585858ff' },
-              label: { color: '#ffffffff' },
-              '.MuiFilledInput-root': { backgroundColor: '#585858ff' }
-            }}
+            input: { color: '#ffffffff', backgroundColor: '#585858ff', fontSize: 24, height: 64 },
+            label: { color: '#ffffffff', fontSize: 22 },
+            '.MuiFilledInput-root': { backgroundColor: '#585858ff' },
+            mb: 3
+          }}
         />
         {error && (
           <Typography color="error" variant="body2">
@@ -90,12 +97,13 @@ function Login() {
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ mt: 2 }}
+          sx={{ mt: 2, height: 60, fontSize: 24, fontWeight: 600 }}
         >
-          Login
+          LOGIN
         </Button>
       </form>
-    </Box>
+      </Box>
+    </>
   );
 }
 export default Login
