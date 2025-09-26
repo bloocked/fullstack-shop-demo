@@ -20,6 +20,16 @@ builder.Services.AddScoped<backend.Services.Interfaces.IUserService, backend.Ser
 builder.Services.AddScoped<backend.Services.Interfaces.IProductService, backend.Services.ProductService>();
 builder.Services.AddScoped<backend.Services.Interfaces.INotificationService, backend.Services.NotificationService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -29,6 +39,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
