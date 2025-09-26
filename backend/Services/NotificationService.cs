@@ -14,7 +14,7 @@ namespace backend.Services
             _repo = repo;
         }
 
-        public void SendNotification(int userId, string message)
+        public NotificationDto SendNotification(int userId, string message)
         {
             var notification = new Notification
             {
@@ -24,6 +24,16 @@ namespace backend.Services
             };
 
             _repo.Add(notification);
+
+            // Map to DTO before returning
+            var notificationDto = new NotificationDto
+            {
+                Id = notification.Id,
+                Message = notification.Message,
+                CreatedAt = notification.CreatedAt
+            };
+
+            return notificationDto;
         }
 
         public NotificationDto? GetLatestForUser(int userId)

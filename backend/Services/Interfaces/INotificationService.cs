@@ -7,7 +7,7 @@ namespace backend.Services.Interfaces
     /// </summary>
     public interface INotificationService
     {
-        void SendNotification(int userId, string message);
+        NotificationDto? SendNotification(int userId, string message);
         NotificationDto? GetLatestForUser(int userId);
     }
 }

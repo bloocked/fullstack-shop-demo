@@ -40,8 +40,8 @@ namespace backend.Data
                     Id = i,
                     Name = $"Product {i}",
                     Description = $"Description for product {i}",
-                    Price = Math.Round((decimal)(new Random().NextDouble() * 100), 2),
-                    Stock = new Random().Next(1, 100)
+                    Price = Math.Round((decimal)(10 * i), 2),
+                    Stock = 2*i
                 });
             }
             modelBuilder.Entity<Product>().HasData(products);
