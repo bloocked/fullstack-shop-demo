@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Grid, Card, CardContent, Typography, Alert, Slide } from "@mui/material";
+import { Grid, Card, CardContent, Typography, Alert, Slide, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 type Product = {
@@ -22,6 +22,24 @@ function Home() {
   const pageSize = 10;
   const loadingRef = useRef(false);
   const navigate = useNavigate();
+
+    // Add product to cart in localStorage
+  const handleAddToCart = (product: Product) => {
+    const cartStr = localStorage.getItem('cart');
+    let cart: { product: Product; quantity: number }[] = [];
+    if (cartStr) {
+      try {
+        cart = JSON.parse(cartStr);
+      } catch {}
+    }
+    const idx = cart.findIndex(item => item.product.id === product.id);
+    if (idx > -1) {
+      cart[idx].quantity += 1;
+    } else {
+      cart.push({ product, quantity: 1 });
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
 
   useEffect(() => {
     const userStr = localStorage.getItem("user");
@@ -122,6 +140,14 @@ function Home() {
                   <Typography sx={{ mb: 1, color: '#90caf9' }}>${product.price}</Typography>
                   <Typography variant="body2" sx={{ color: '#bbb' }}>{product.description}</Typography>
                 </CardContent>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ m: 2, fontWeight: 700 }}
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </Button>
               </Card>
             </Grid>
           ))}
