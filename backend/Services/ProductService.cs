@@ -23,7 +23,10 @@ namespace backend.Services
                     Name = p.Name,
                     Description = p.Description,
                     Price = p.Price,
-                    Stock = p.Stock
+                    Stock = p.Stock,
+                    ImageUrl = string.IsNullOrEmpty(p.ImageUrl)
+                    ? "https://picsum.photos/200/300"
+                    : p.ImageUrl
                 })
                 .ToList();
         }

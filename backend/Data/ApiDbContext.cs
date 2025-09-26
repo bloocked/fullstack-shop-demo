@@ -14,6 +14,10 @@ namespace backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+                modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
                 
 
             // Seed users
@@ -24,8 +28,8 @@ namespace backend.Data
                 users.Add(new User
                 {
                     Id = i,
-                    Username = $"user{i}",
-                    Password = $"pass{i}" // you would hash this
+                    Username = $"user{i}", // gurantees unique but you would have logic checking that
+                    Password = $"pass{i}"  // you would hash this
                 });
             }
             modelBuilder.Entity<User>().HasData(users);

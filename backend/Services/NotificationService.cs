@@ -24,7 +24,6 @@ namespace backend.Services
             };
 
             _repo.Add(notification);
-            Console.WriteLine($"THE ID OF NOTI IS ====== {notification.Id}");
 
             // Map to DTO before returning
             var notificationDto = new NotificationDto
