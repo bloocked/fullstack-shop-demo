@@ -32,9 +32,11 @@ function Home() {
     }
   }, []);
 
-  // Fetch latest notification for user and show banner
+  // Show notification banner only if showLoginNotification flag is set
   useEffect(() => {
     if (!userId) return;
+    const shouldShow = localStorage.getItem('showLoginNotification');
+    if (!shouldShow) return;
     fetch(`${import.meta.env.VITE_API_URL}/api/notifications/latest?userId=${userId}`)
       .then(res => res.ok ? res.json() : null)
       .then(data => {
@@ -43,6 +45,7 @@ function Home() {
           setShowBanner(true);
           setTimeout(() => setShowBanner(false), 4000);
         }
+        localStorage.removeItem('showLoginNotification');
       });
   }, [userId]);
 

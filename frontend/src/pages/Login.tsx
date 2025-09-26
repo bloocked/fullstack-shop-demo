@@ -27,9 +27,10 @@ function Login() {
       }
 
       const user = await response.json();
-      localStorage.setItem('user', JSON.stringify(user));
 
-      navigate('/home');
+  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('showLoginNotification', '1');
+  navigate('/home');
 
     } catch (err) {
       setError('Network error');
